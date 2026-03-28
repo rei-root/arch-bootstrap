@@ -1,7 +1,9 @@
 #include "check_internet_connected/check_internet_connected.hpp"
 #include "disk_partitioning/disk_partitioning.hpp"
 #include "create_script/create_script.hpp"
+#include "base_package-instal/base_package-instal.hpp"
 #include <iostream>
+#include <ostream>
 
 int main(){
     std::cout << "========HELLO========\n" <<
@@ -17,6 +19,8 @@ int main(){
                      "4. station wlan0 connect SSID\n" << std::endl;
         return 1;
     }
+    std::cout << "========Install base package========" << std::endl;
+    install_package();
 
     std::cout << "=====Disk partitioning=====\n" << std::endl;
     disk_partitioning();

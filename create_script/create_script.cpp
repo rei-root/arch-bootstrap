@@ -117,7 +117,9 @@ void create_script() {
 
     installer.close();
 
-    system("arch-chroot /mnt /bin/bash install.sh");
+    system("chmod +x /mnt/install.sh");
+
+    system("arch-chroot /bin/bash install.sh");
 
 
 }
