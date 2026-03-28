@@ -1,0 +1,1 @@
+bool internet_check();
