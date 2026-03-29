@@ -15,20 +15,13 @@ void disk_partitioning() {
     std::cout << "Select disk (for example: /dev/sdb): ";
     std::cin >> name_disk;
 
-    std::cout << "Root size (GB): ";
-    std::cin >> root_size;
-
     std::cout << "EFI Size (MiB) (default 512, recommended 512-1024): ";
     if (!(std::cin >> efi_size)) {
         efi_size = 512;
     }
 
-    std::cout << "Use Home? (1/0): ";
-    std::cin >> use_home;
-    if (use_home) {
-        std::cout << "Size Home (GB): ";
-        std::cin >> home_size;
-    }
+    std::cout << "Root size (GB): ";
+    std::cin >> root_size;
 
     std::cout << "Use Swap? (1/0): ";
     std::cin >> use_swap;
@@ -36,6 +29,10 @@ void disk_partitioning() {
         std::cout << "Size Swap (GB): ";
         std::cin >> swap_size;
     }
+
+    std::cout << "Use Home? (1/0): ";
+    std::cin >> use_home;
+
 // =================================================================================
 
     long long current_mib = 1;

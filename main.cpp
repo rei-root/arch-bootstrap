@@ -19,11 +19,12 @@ int main(){
                      "4. station wlan0 connect SSID\n" << std::endl;
         return 1;
     }
-    std::cout << "========Install base package========" << std::endl;
-    install_package();
 
     std::cout << "=====Disk partitioning=====\n" << std::endl;
     disk_partitioning();
+
+    std::cout << "========Install base package========" << std::endl;
+    install_package();
 
     std::cout << "=======Create install.sh=======";
     create_script();
