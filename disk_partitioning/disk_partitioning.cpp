@@ -23,14 +23,14 @@ void disk_partitioning() {
     std::cout << "Root size (GB): ";
     std::cin >> root_size;
 
-    std::cout << "Use Swap? (1/0): ";
+    std::cout << "Use Swap? (y/n): ";
     std::cin >> use_swap;
     if (use_swap) {
         std::cout << "Size Swap (GB): ";
         std::cin >> swap_size;
     }
 
-    std::cout << "Use Home? (1/0): ";
+    std::cout << "Use Home? (y/n): ";
     std::cin >> use_home;
 
 // =================================================================================

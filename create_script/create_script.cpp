@@ -15,35 +15,39 @@ void create_script() {
 
     std::cout << "--- Timezone Setup ---" << std::endl;
     system("ls /usr/share/zoneinfo");
-    std::cout << "Your Region (e.g., Europe): ";
-    std::cin >> region;
+    std::cout << "Your Region (default Europe): ";
+    if(!(std::cin >> region)){
+        region = "Europe";
+    }
 
     system(("ls /usr/share/zoneinfo/" + region).c_str());
-    std::cout << "Your City (e.g., Moscow): ";
-    std::cin >> city;
+    std::cout << "Your City (default Moscow): ";
+    if(!(std::cin >> city)){
+        city = "Moscow";
+    }
 
     std::string timezone = region + "/" + city;
     clear_buffer();
 
     // ====================== Host Name ======================
     std::string host_name;
-    std::cout << "Your PC Host Name [arch-pc]: ";
+    std::cout << "Your PC Host Name (default arch-pc): ";
     std::getline(std::cin, host_name);
     if (host_name.empty()) host_name = "arch-pc";
 
     // ========================== UserName ==========================
     std::string username;
-    std::cout << "Enter Your username [user]: ";
+    std::cout << "Enter Your username (default user): ";
     std::getline(std::cin, username);
     if (username.empty()) username = "user";
 
     // ========================== Passwords ==========================
     std::string root_password, user_password;
-    std::cout << "Your root password [1]: ";
+    std::cout << "Your root password (default 1): ";
     std::getline(std::cin, root_password);
     if (root_password.empty()) root_password = "1";
 
-    std::cout << "Your user password [1]: ";
+    std::cout << "Your user password (default 1): ";
     std::getline(std::cin, user_password);
     if (user_password.empty()) user_password = "1";
 
@@ -119,7 +123,8 @@ void create_script() {
 
     system("chmod +x /mnt/install.sh");
 
-    system("arch-chroot /bin/bash install.sh");
+    system("arch-chroot /mnt /bin/bash /install.sh");
 
-
+    std::cout << "Installer completed its work!\n" <<
+                 "You can reboot with command (reboot)" << std::endl;
 }
