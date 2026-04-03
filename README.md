@@ -14,16 +14,27 @@ After installation begins:
 
 3. The **/home** partition is **NOT** saved; it will be formatted along with the rest of the system.
 
+4. This installer supports **UEFI systems only**. (Support for BIOS maybe added in the future) 
+ 
+
 ### The author is not responsible for turning your family photos or term papers into random bytes. Make backups before running.
 
 ---
 
- A minimalistic Bash/C++ script for quickly deploying an Arch Linux system. It's designed to automate routine installation steps (partitioning, base packages)
+## Description
+
+ A minimalistic Bash/C++ script for quickly deploying an Arch Linux system.
+
+ It automates:
+   1. Disk partitioning
+   2. Base system installation
+   3. Basic configuration
 
 ---
 
 ### Before starting, make sure you have:
   1. An active internet connection
+  2. Support UEFI and UEFI firmware enabled
 
 ---
 
