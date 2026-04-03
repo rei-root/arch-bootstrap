@@ -25,12 +25,28 @@
 #include <iostream>
 #include <ostream>
 #include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 int main(){
     std::cout << "========HELLO========\n" <<
                  "=====ARCHINSTALL=====\n" <<
                  "=====by rei-root=====\n" <<
                  "---------------------\n" << std::endl;
+
+    std::cout << "Checking if UEFI is enabled...\n" << std::endl;
+    if(!fs::exists("/sys/firmware/efi")){
+    std::cerr << "Error: Incompatible boot mode detected.\n"
+                  << "The system is booted in Legacy BIOS mode.\n"
+                  << "Arch Linux installation requires UEFI mode.\n"
+                  << "Please restart your system, enter BIOS settings and enable UEFI.\n"
+                  << "Installation aborted.\n";
+        return 1;
+    }
+    std::cout << "UEFI detected.\n" <<
+                 "Continue installation...\n" << std::endl;
+
     if(!internet_check()){
         std::cout << "No internet connection! Please connect to the internet!\n" << std::endl;
         std::cout << "To connect to the Internet, you can use the prompts:\n" <<
@@ -60,9 +76,8 @@ int main(){
         }
     }
 
-
     std::cout << "=====Disk partitioning=====\n" << std::endl;
-    disk_partitioning();
+    disk_partitioning_UEFI();
 
     std::cout << "========Install base package========" << std::endl;
     install_package();

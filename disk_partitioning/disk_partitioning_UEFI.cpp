@@ -10,7 +10,7 @@
 #include <string>
 
 
-void disk_partitioning() {
+void disk_partitioning_UEFI() {
     std::string name_disk;
     int root_size = 0, home_size = 0, swap_size = 0;
     int efi_size = 512;

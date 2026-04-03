@@ -9,7 +9,7 @@ add_executable(arch_bootstrap
     base_package-instal/base_package-instal.cpp
     check_internet_connected/check_internet_connected.cpp
     create_script/create_script.cpp
-    disk_partitioning/disk_partitioning.cpp
+    disk_partitioning/disk_partitioning_UEFI.cpp
 )
 
 target_include_directories(arch_bootstrap PUBLIC

@@ -4,4 +4,11 @@
 // This program is free software under the GNU GPL v3 license.
 // See LICENSE file for details.
 
-void disk_partitioning_UEFI();
+#include "disk_partitioning.hpp"
+#include <iostream>
+#include <cstdlib>
+#include <string>
+
+
+void disk_partitioning_BIOS(){
+}
