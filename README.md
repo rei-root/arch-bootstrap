@@ -14,7 +14,6 @@ After installation begins:
 
 3. The **/home** partition is **NOT** saved; it will be formatted along with the rest of the system.
 
-4. This installer supports **UEFI systems only**. (Support for BIOS maybe added in the future) 
  
 
 ### The author is not responsible for turning your family photos or term papers into random bytes. Make backups before running.
