@@ -30,36 +30,24 @@
 namespace fs = std::filesystem;
 
 int main(){
-    std::cout << "========HELLO========\n" <<
-                 "=====ARCHINSTALL=====\n" <<
-                 "=====by rei-root=====\n" <<
-                 "---------------------\n" << std::endl;
-
-    std::cout << "Checking if UEFI is enabled...\n" << std::endl;
-    if(!fs::exists("/sys/firmware/efi")){
-    std::cerr << "Error: Incompatible boot mode detected.\n"
-                  << "The system is booted in Legacy BIOS mode.\n"
-                  << "Arch Linux installation requires UEFI mode.\n"
-                  << "Please restart your system, enter BIOS settings and enable UEFI.\n"
-                  << "Installation aborted.\n";
-        return 1;
-    }
-    std::cout << "UEFI detected.\n" <<
-                 "Continue installation...\n" << std::endl;
-
+    std::cout << "==========HELLO==========\n" <<
+                 "=====ARCH-BBOOTSTRAP=====\n" <<
+                 "=======by rei-root=======\n" <<
+                 "-------------------------\n" << std::endl;
+                 
     if(!internet_check()){
         std::cout << "No internet connection! Please connect to the internet!\n" << std::endl;
         std::cout << "To connect to the Internet, you can use the prompts:\n" <<
                      "1. iwctl\n"
                      "2. station wlan0(replace your network interface) scan\n"
-                     "3. station wlan0 get-networks\n"
+                     "3. station wlan0 get-networks\n"                                  
                      "4. station wlan0 connect SSID\n"
                      "wlan0 replace your network interface\n" << std::endl;
-        return 1;
-    }
-
+                return 1;
+     }
+        
     std::string ml_choise;
-
+    
     while (true) {
         std::cout << "Update mirror list for better speed and stability? (y/n): ";
         std::getline(std::cin, ml_choise);
@@ -76,13 +64,37 @@ int main(){
         }
     }
 
-    std::cout << "=====Disk partitioning=====\n" << std::endl;
-    disk_partitioning_UEFI();
-
-    std::cout << "========Install base package========" << std::endl;
-    install_package();
-
-    std::cout << "=======Create install.sh=======";
-    create_script();
+    std::cout << "Checking boot mode...\n" << std::endl;
+    
+    if(!fs::exists("/sys/firmware/efi")){
+        std::cout << "BIOS detected.\n" <<
+                     "Continue installation in BIOS mode...\n" << std::endl;
+                     
+                     
+        std::cout << "============Disk partitioning============" << std::endl;
+        disk_partitioning_BIOS();
+        
+        std::cout << "===========Install base package===========" << std::endl;
+        install_package();
+        
+        std::cout << "=============Create install.sh=============" << std::endl;
+        create_script_BIOS();
+        
+        std::cout << "===============Done!======================" << std::endl;
+    } else {
+        std::cout << "UEFI detected.\n" <<
+                     "Continue installation in UEFI mode...\n" << std::endl;
+                     
+        std::cout << "============Disk partitioning============" << std::endl;
+        disk_partitioning_UEFI();
+        
+        std::cout << "===========Install base package===========" << std::endl;
+        install_package();
+        
+        std::cout << "=============Create install.sh=============" << std::endl;
+        create_script_UEFI();
+        
+        std::cout << "===============Done!======================" << std::endl;
+    }
 
 }

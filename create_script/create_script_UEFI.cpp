@@ -11,11 +11,11 @@
 #include <string>
 #include <limits>
 
-void clear_buffer() {
+static void clear_buffer() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-void create_script() {
+void create_script_UEFI() {
     // ======================== Time Zone Settings ========================
     std::string region, city;
 
@@ -38,29 +38,29 @@ void create_script() {
     // ====================== Host Name ======================
     std::string host_name;
     std::cout << "Your PC Host Name (default arch-pc): ";
-    std::getline(std::cin, host_name);
-    if (host_name.empty()) host_name = "arch-pc";
+    if (!(std::cin >> host_name)) host_name = "arch-pc";
 
     // ========================== UserName ==========================
     std::string username;
     std::cout << "Enter Your username (default user): ";
-    std::getline(std::cin, username);
-    if (username.empty()) username = "user";
+    if (!(std::cin >> username)) username = "user";
 
     // ========================== Passwords ==========================
     std::string root_password, user_password;
     std::cout << "Your root password (default 1): ";
-    std::getline(std::cin, root_password);
-    if (root_password.empty()) root_password = "1";
+    if (!(std::cin >> root_password)) root_password = "1";
 
     std::cout << "Your user password (default 1): ";
-    std::getline(std::cin, user_password);
-    if (user_password.empty()) user_password = "1";
+    if (!(std::cin >> user_password)) user_password = "1";
 
     // ========================== GPU Selection ==========================
     int gpu_choice = 0;
     while (gpu_choice < 1 || gpu_choice > 3) {
-        std::cout << "\nSelect GPU:\n1. AMD\n2. Intel\n3. NVIDIA\nChoice: ";
+        std::cout << "\nSelect GPU:\n"
+                     "1. AMD\n"
+                     "2. Intel\n"
+                     "3. NVIDIA\n"
+                     "Choice: ";
         if (!(std::cin >> gpu_choice)) {
             std::cin.clear();
             clear_buffer();
@@ -69,8 +69,20 @@ void create_script() {
 
     // ========================== Desktop Environment ==========================
     int ui_choice = 0;
-    while (ui_choice < 1 || ui_choice > 8) {
-        std::cout << "\n--- DE/WM ---\n1. KDE\n2. GNOME\n3. XFCE\n4. Cinnamon\n5. MATE\n6. i3\n7. Sway\n8. Hyprland\nChoice: ";
+    while (ui_choice < 1 || ui_choice > 9) {
+        std::cout << "\n--- DE Selection ---\n"
+                     "1. KDE\n"
+                     "2. GNOME\n"
+                     "3. XFCE\n"
+                     "4. Cinnamon\n"
+                     "5. MATE\n"
+                     "\n--- WM Selection ---\n"
+                     "6. i3\n"
+                     "7. Sway\n"
+                     "8. Hyprland\n"
+                     "\n--- None DE/WM ---\n"
+                     "9. Without DE/WM\n"
+                     "Choice: ";
         if (!(std::cin >> ui_choice)) {
             std::cin.clear();
             clear_buffer();
@@ -107,8 +119,10 @@ void create_script() {
     else if (gpu_choice == 2) installer << "pacman -S --noconfirm xf86-video-intel\n";
     else if (gpu_choice == 3) installer << "pacman -S --noconfirm nvidia nvidia-utils\n";
 
-    installer << "pacman -S --noconfirm xorg xorg-server\n";
-
+    if (ui_choice <= 6) {
+            installer << "pacman -S --noconfirm xorg xorg-server\n";
+        }
+    
     switch(ui_choice) {
         case 1: installer << "pacman -S --noconfirm plasma-desktop kde-applications sddm\nsystemctl enable sddm\n"; break;
         case 2: installer << "pacman -S --noconfirm gnome gnome-extra gdm\nsystemctl enable gdm\n"; break;
@@ -118,6 +132,9 @@ void create_script() {
         case 6: installer << "pacman -S --noconfirm i3-wm i3status i3lock sddm\nsystemctl enable sddm\n"; break;
         case 7: installer << "pacman -S --noconfirm sway waybar swaylock foot\n"; break;
         case 8: installer << "pacman -S --noconfirm hyprland waybar kitty rofi-wayland\n"; break;
+        case 9: 
+                std::cout << "Console-only system selected. Skipping GUI packages." << std::endl;
+                    break;
     }
 
     installer << "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB\n"

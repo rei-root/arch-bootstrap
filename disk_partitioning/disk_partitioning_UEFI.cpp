@@ -15,30 +15,52 @@ void disk_partitioning_UEFI() {
     int root_size = 0, home_size = 0, swap_size = 0;
     int efi_size = 512;
     bool use_home = false, use_swap = false;
+    std::string input;
 
 // =================================================================================
     system("lsblk");
     std::cout << "Select disk (for example: /dev/sdb): ";
     std::cin >> name_disk;
+    std::cin.ignore(1000, '\n');    
 
     std::cout << "EFI Size (MiB) (default 512, recommended 512-1024): ";
     if (!(std::cin >> efi_size)) {
+        std::cin.clear();
+        std::cin.ignore(1000, '\n');
         efi_size = 512;
+    }else{
+        std::cin.ignore(1000, '\n');
     }
 
     std::cout << "Root size (GB): ";
-    std::cin >> root_size;
-
-    std::cout << "Use Swap? (y/n): ";
-    std::cin >> use_swap;
-    if (use_swap) {
-        std::cout << "Size Swap (GB): ";
-        std::cin >> swap_size;
-    }
-
-    std::cout << "Use Home? (y/n): ";
-    std::cin >> use_home;
-
+        if(!(std::cin >> root_size)){
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            root_size = 20;
+        } else {
+            std::cin.ignore(1000, '\n');
+        }
+    
+        std::cout << "Use Swap? (y/n): ";
+        std::cin >> input;
+        std::cin.ignore(1000, '\n');
+        use_swap = (input == "y" || input == "Y"); 
+    
+        if (use_swap) {
+            std::cout << "Size Swap (GB): ";
+            if(!(std::cin >> swap_size)){
+                std::cin.clear();
+                std::cin.ignore(1000, '\n');
+                swap_size = 8;
+            } else {
+                std::cin.ignore(1000, '\n');
+            }
+        }
+    
+        std::cout << "Use Home? (y/n): ";
+        std::cin >> input;
+        std::cin.ignore(1000, '\n');
+        use_home = (input == "y" || input == "Y");
 // =================================================================================
 
     long long current_mib = 1;
