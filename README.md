@@ -38,7 +38,7 @@ After installation begins:
 
 ### Install: 
 ```
-curl -L -O https://github.com/rei-root/arch-bootstrap/releases/download/V-1.4/arch_bootstrap
+curl -L -O https://github.com/rei-root/arch-bootstrap/releases/download/V-1.5/arch_bootstrap
 chmod +x arch_bootstrap
 ./arch_bootstrap
 ```
