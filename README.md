@@ -33,7 +33,6 @@ After installation begins:
 
 ### Before starting, make sure you have:
   1. An active internet connection
-  2. Support UEFI and UEFI firmware enabled
 
 ---
 
